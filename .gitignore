@@ -1,0 +1,15 @@
+# data, run records and caches stay outside the repository (see data/README.md)
+workspace/
+*.npz
+*.npy
+*.nc
+*.grib
+*.grd
+*.pkl
+*.parquet
+*.zarr/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db

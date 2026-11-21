@@ -1,0 +1,18 @@
+# model and scoring
+numpy
+pandas
+scipy
+scikit-learn
+torch
+pyarrow          # parquet input read by src/kaggle_modelA.py
+matplotlib
+# data processing
+xarray
+netCDF4
+cfgrib           # ECMWF reforecast GRIB files
+zarr
+gcsfs            # anonymous access to the WeatherBench2 ERA5 copy (gs://)
+dask
+cdsapi           # Copernicus CDS and ECMWF Data Store downloads (needs your own key in ~/.cdsapirc)
+requests
+cartopy          # map in figures/scripts/report_raw_inputs.py
