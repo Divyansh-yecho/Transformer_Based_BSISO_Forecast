@@ -3,6 +3,10 @@
 These are the files of the Kaggle dataset `divyanshyecho/profa-inputs-ext`, exactly as the final runs used them. The
 notebooks in `models/*/notebooks/` find them in `/kaggle/input/` and run `profA.py` once per fold and seed.
 
+`profA.py` holds every config ever tested, so it is long. To read one model, start with `models/logistic_transformer/model.py`
+or `models/transformer_only/model.py`: each holds only the network, loss and training of that model, with the same weight
+names, and `models/check_equivalence.py` checks that they match this file.
+
 | File | What it does |
 |---|---|
 | `profA.py` | the whole model: data building (anomalies, EOFs, targets, thresholds from the training years of each fold), the linear fits (`warm_skip`, `fit_off`, the weekly ridge), the network (`ProfA`), the losses, training (`train`) and the run modes |

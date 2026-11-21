@@ -53,10 +53,11 @@ paths.py                  where the data, processed inputs and Kaggle outputs li
 requirements.txt
 data/                     README: every dataset, its source and how to get it
 data_processing/          download and processing scripts: model inputs and the ECMWF benchmark
-src/                      the model code used by both models (data building, linear fits, network, training)
+src/                      the code the Kaggle runs used (data building, linear fits, network, training, all configs)
 models/
-  logistic_transformer/   README, Kaggle notebooks with their outputs, cross-validation and test scoring, results
+  logistic_transformer/   model.py (the model), README, Kaggle notebooks with their outputs, scoring scripts, results
   transformer_only/       the same for the transformer alone
+  check_equivalence.py    checks that each model.py gives exactly the same network as src/profA.py
 figures/                  figures of the inputs, the network and the results, with the scripts that make them
 background/               earlier analysis: the BSISO and Indian rain, BSISO against MISO, a summary of the first tests
 ```

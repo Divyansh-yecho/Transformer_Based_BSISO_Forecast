@@ -96,6 +96,7 @@ left over, and about 60% of that is still linear (a propagation rule that change
 
 | File | What it is |
 |---|---|
+| `model.py` | **the model itself**: the transformer (tokens, encoder, heads), the frozen linear parts and their closed-form fit, how they are added, the loss and the training loop. 50,092 trained weights plus 9,408 frozen linear weights |
 | `notebooks/W3B2_cross_validation.ipynb` | Kaggle run of the cross-validation (round W3B2), with its printed output |
 | `notebooks/W3BF_test_2014_2024.ipynb` | Kaggle run of the final fit on 1960-2013 and the test forecasts (10 seeds), with its printed output |
 | `cv_eval.py` | scores the cross-validation by epoch: transformer gain, season bootstrap. `python cv_eval.py W3B2 W3N` |
@@ -105,5 +106,7 @@ left over, and about 60% of that is still linear (a propagation rule that change
 | `results/test_W3BF_daily_ere.csv` | daily ERE skill of the linear part (days 1-7, 8-14) |
 | `results/cv_vs_ecmwf_2005_2013.csv` | our out-of-fold forecasts against ECMWF on 2005-2013 |
 
-The model code is [`../../src/profA.py`](../../src/profA.py) (config `W3N`). The scoring scripts read the Kaggle run records
-from `BSISO_RUNS` (see [`../../data/README.md`](../../data/README.md)).
+`model.py` is a readable copy of the parts of [`../../src/profA.py`](../../src/profA.py) that config `W3N` uses. The Kaggle
+runs used `profA.py`, which also builds the data (anomalies, EOFs, targets, the weekly linear parts). The weight names are the
+same in both, and [`../check_equivalence.py`](../check_equivalence.py) checks that they give identical outputs and the same
+number of weights. The scoring scripts read the Kaggle run records from `BSISO_RUNS` (see [`../../data/README.md`](../../data/README.md)).

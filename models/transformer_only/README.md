@@ -14,14 +14,16 @@ here the heads give the forecast directly.
 |---|---|---|
 | Linear models | fitted first, frozen, output added | none |
 | Inputs | six maps (MSLP, IMD rain, u850, precipitable water, SST, z850), BSISO, rain band | the same plus OLR and u200, plus one token per input vector of the linear models (their inputs, not their forecasts) |
+| Tokens | 80 | 96 (6 for OLR, 6 for u200, 4 linear-input tokens) |
+| Weights | 50,092 trained (+ 9,408 frozen linear) | 90,746 |
 | Extra head | | a daily rain-map head (283 cells, leads 1-14) as an extra target |
 | Learning rate, epochs | 1.5e-4, 12 | 5e-4, 40 |
 | Size penalties | yes | none (there is no linear forecast to stay close to) |
 | Epoch read | 12 for every head | best per head in cross-validation: BSISO 20, maps 40, ERE 4 |
 
-Everything else is shared: tokenisation (80 tokens of 32 numbers), encoder (3 layers, 4 heads, GELU), FiLM for the slow
-state, loss weights, AdamW with weight decay 0.05, batch 64, dropout 0.2, EMA of the weights, off-season BSISO samples and
-10 seeds for the test.
+Everything else is shared: tokens of 32 numbers with one token per day for the newest five days, encoder (3 layers,
+4 heads, GELU), FiLM for the slow state, loss weights, AdamW with weight decay 0.05, batch 64, dropout 0.2, EMA of the
+weights, off-season BSISO samples and 10 seeds for the test.
 
 `TXM` was the best of the transformer-only variants tried in cross-validation (round TX):
 
@@ -65,6 +67,7 @@ The model starts to learn the training summers by heart early.
 
 | File | What it is |
 |---|---|
+| `model.py` | **the model itself**: the transformer (tokens, linear-input tokens, encoder, BSISO / weekly / daily map heads), the loss and the training loop |
 | `notebooks/TX2_cross_validation.ipynb` | Kaggle run of the cross-validation of TXD, TXP and TXM (round TX2), with its printed output |
 | `notebooks/TY1_cross_validation_60_epochs.ipynb` | 60-epoch cross-validation of TYE and TYW (the loss-curve run), with its printed output |
 | `notebooks/TXMF_test_2014_2024.ipynb` | Kaggle run of the final fit on 1960-2013 and the test forecasts of TXM (10 seeds), with its printed output |
@@ -75,5 +78,6 @@ The model starts to learn the training summers by heart early.
 | `results/test_TXM_bootstrap.csv` | season bootstrap of TXM against the other models |
 | `results/cv_scores_TX.csv` | cross-validation table of all transformer-only variants |
 
-The model code is [`../../src/profA.py`](../../src/profA.py) (config `TXM`; the TX and TY rounds are described in the
-comments below the `CFGS` dictionary).
+`model.py` is a readable copy of the parts of [`../../src/profA.py`](../../src/profA.py) that config `TXM` uses. The Kaggle
+runs used `profA.py`; [`../check_equivalence.py`](../check_equivalence.py) checks that both give identical outputs and the
+same number of weights. The TX and TY rounds are described in the comments below the `CFGS` dictionary of `profA.py`.
