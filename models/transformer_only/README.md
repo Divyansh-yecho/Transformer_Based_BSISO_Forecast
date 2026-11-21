@@ -5,6 +5,9 @@ nothing. This model shows what the transformer can do by itself, and where it fa
 
 ![The transformer](../../figures/7_transformer_schematic.png)
 
+The figure shows the shared transformer. Its note about frozen linear parts applies to the Logistic + Transformer model only:
+here the heads give the forecast directly.
+
 ## What is different from the Logistic + Transformer model
 
 | | Logistic + Transformer (`W3N`) | Transformer alone (`TXM`) |
